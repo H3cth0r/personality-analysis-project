@@ -1,4 +1,4 @@
-# Project 13 — Personality Analysis
+# Project 13 - Personality Analysis
 
 Do word habits show personality? We study the **Persona-E²** dataset:
 3,111 short texts, each read by 36 people who reported how it made them
@@ -17,7 +17,7 @@ feeling words, and compare against personality traits.
 
 ## Setup
 
-Install `uv` once — it manages the Python version, dependencies and venv.
+Install `uv` once. It manages the Python version, dependencies and venv.
 Pick your OS:
 
 ```bash
@@ -40,13 +40,13 @@ uv sync
 `uv sync` reads `pyproject.toml`, installs matching Python, creates `.venv`,
 locks `uv.lock`.
 
-LLM access (tasks 6–7 only): put `OPENROUTER_API_KEY=sk-or-v1-...` in a
+LLM access (tasks 6 and 7 only): put `OPENROUTER_API_KEY=sk-or-v1-...` in a
 `.env` file next to this README (free account at openrouter.ai). The file
 never enters git; the notebook's first cells load it.
 
 ## Data
 
-Download everything (CC BY-NC-SA — research use only, never commit these
+Download everything (CC BY-NC-SA: research use only, never commit these
 files; `data/` is gitignored):
 
 ```bash
@@ -77,7 +77,7 @@ One marimo notebook per task (`00_setup` … `07_authors_method`), plain
 Python cells. Run any of them with:
 
 ```bash
-# live + editable — the working mode
+# live and editable, the working mode
 uv run marimo edit notebooks/00_setup.py
 
 # read-only app view (for showing around)
@@ -95,10 +95,34 @@ First-run notes, per machine:
 - Data must be in `data/raw/` (see Data above). Everything else builds
   itself: the notebooks cache their outputs under `data/`
   (`events.parquet`, `speakers.parquet`, LDA sweeps) and re-use them.
-- The LDA sweep (notebook `02_topics`) takes ~30 min ONCE per machine,
-  run by `uv run python scripts/sweep_topics.py`. After that, seconds.
-- The submission notebook (one Jupyter file with all tasks) gets
-  assembled at the end of the project.
+- The LDA sweep (notebook `02_topics`) takes about 30 minutes ONCE per
+  machine, run by `uv run python scripts/sweep_topics.py`. After that,
+  it takes seconds.
+
+## The unified notebook
+
+`reports/submission_notebook.ipynb` holds the whole project in one
+Jupyter notebook: every task in order, with its results already saved
+(115 cells, 38 of them with outputs). View it on GitHub here:
+
+https://github.com/H3cth0r/personality-analysis-project/blob/main/reports/submission_notebook.ipynb
+
+To open and run it on your machine, follow the Setup and Data sections
+above first, then:
+
+```bash
+uv sync
+uv run jupyter lab reports/submission_notebook.ipynb
+```
+
+Running it needs the same inputs as the notebooks. Tasks 6 and 7 read
+saved answer files: the five Task 6 explanations ship in
+`outputs/tables/task6_llm_explanations.csv`, and the Task 7 answers come
+from `scripts/run_task7.py`, which needs `OPENROUTER_API_KEY`. Without
+those files, Tasks 1 to 5 run and Tasks 6 and 7 stop at their input step.
+
+To rebuild the notebook from the eight task notebooks, run
+`uv run python scripts/build_submission.py --run`.
 
 ## Layout
 
@@ -108,7 +132,7 @@ data/             raw/, interim/, processed/   (gitignored)
 notebooks/        one marimo notebook per task (00…07)
 src/personality/  the logic: loading, counting, topics, lexicon, embeddings
 scripts/          build helpers (sweep runner, final assembly later)
-outputs/          figures/ + tables/ — committed, the evidence
+outputs/          figures/ + tables/, committed as the evidence
 reports/          final PDF + draft
 ```
 
