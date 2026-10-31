@@ -71,6 +71,31 @@ ls -la data/raw/lexicons  # ~530 KB
 Everything downstream regenerates from these files: notebook `00_setup`
 reads them and builds `data/processed/events.parquet`.
 
+## The unified notebook
+
+`reports/submission_notebook.ipynb` holds the whole project in one
+Jupyter notebook: every task in order, with its results already saved
+(115 cells, 38 of them with outputs). View it on GitHub here:
+
+https://github.com/H3cth0r/personality-analysis-project/blob/main/reports/submission_notebook.ipynb
+
+To open and run it on your machine, follow the Setup and Data sections
+above first, then:
+
+```bash
+uv sync
+uv run jupyter lab reports/submission_notebook.ipynb
+```
+
+Running it needs the same inputs as the notebooks. Tasks 6 and 7 read
+saved answer files: the five Task 6 explanations ship in
+`outputs/tables/task6_llm_explanations.csv`, and the Task 7 answers come
+from `scripts/run_task7.py`, which needs `OPENROUTER_API_KEY`. Without
+those files, Tasks 1 to 5 run and Tasks 6 and 7 stop at their input step.
+
+To rebuild the notebook from the eight task notebooks, run
+`uv run python scripts/build_submission.py --run`.
+
 ## Notebooks
 
 One marimo notebook per task (`00_setup` … `07_authors_method`), plain
@@ -98,31 +123,6 @@ First-run notes, per machine:
 - The LDA sweep (notebook `02_topics`) takes about 30 minutes ONCE per
   machine, run by `uv run python scripts/sweep_topics.py`. After that,
   it takes seconds.
-
-## The unified notebook
-
-`reports/submission_notebook.ipynb` holds the whole project in one
-Jupyter notebook: every task in order, with its results already saved
-(115 cells, 38 of them with outputs). View it on GitHub here:
-
-https://github.com/H3cth0r/personality-analysis-project/blob/main/reports/submission_notebook.ipynb
-
-To open and run it on your machine, follow the Setup and Data sections
-above first, then:
-
-```bash
-uv sync
-uv run jupyter lab reports/submission_notebook.ipynb
-```
-
-Running it needs the same inputs as the notebooks. Tasks 6 and 7 read
-saved answer files: the five Task 6 explanations ship in
-`outputs/tables/task6_llm_explanations.csv`, and the Task 7 answers come
-from `scripts/run_task7.py`, which needs `OPENROUTER_API_KEY`. Without
-those files, Tasks 1 to 5 run and Tasks 6 and 7 stop at their input step.
-
-To rebuild the notebook from the eight task notebooks, run
-`uv run python scripts/build_submission.py --run`.
 
 ## Layout
 
