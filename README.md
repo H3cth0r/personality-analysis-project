@@ -11,9 +11,9 @@ feeling words, and compare against personality traits.
 
 | Name | Student ID |
 |---|---|
-| _fill in_ | _fill in_ |
-| _fill in_ | _fill in_ |
-| _fill in_ | _fill in_ |
+| Héctor Miranda | 2606090 |
+| Bansi Makani | 2606086 |
+| Rubina Sultana | 2606093 |
 
 ## Setup
 
